@@ -1,12 +1,16 @@
 import random
 
-class TSP:
+class TravelingSalesmanProblem:
 
     def __init__(self, num_cities):
         self.num_cities = num_cities
-        self.distance_matrix = [[random.randint(3, 9) if i != j else 0 
-                                for j in range(num_cities)] 
-                               for i in range(num_cities)]
+        matrix = [[0] * num_cities for _ in range(num_cities)]
+        for i in range(num_cities):
+            for j in range(i + 1, num_cities):
+                dist = random.randint(3, 9)
+                matrix[i][j] = dist
+                matrix[j][i] = dist
+        self.distance_matrix = matrix
     
 
     def calculate_tour_length(self, tour):
@@ -99,26 +103,23 @@ class local_search_algorithm:
 
 if __name__ == "__main__":
     for num_cities in [100, 500, 1000]:
-        print(f"\n{num_cities} cities:")
-        print("-" * 40)
-        
-        tsp = TSP(num_cities)
+        print(f"Amount of cities: {num_cities}")
+        tsp = TravelingSalesmanProblem(num_cities)
         
         rm = random_algorithm(tsp)
-        rm_tour = rm.construct_solution()
-        rm_initial = tsp.calculate_tour_length(rm_tour)
+        random_tour = rm.construct_solution()
+        random_initial = tsp.calculate_tour_length(random_tour)
         
         ls = local_search_algorithm(tsp)
-        _, rm_final = ls.optimize(rm_tour)
+        _, random_final = ls.optimize(random_tour)
         
-        print(f"RM: {rm_initial} , {rm_final} (improved {rm_initial - rm_final})")
+        print(f"Random Algorithm: Starting solution: {random_initial} , Improved after local search: {random_final}")
         
         gr = greedy_algorithm(tsp)
-        gr_tour = gr.construct_solution()
-        gr_initial = tsp.calculate_tour_length(gr_tour)
+        greedy_tour = gr.construct_solution()
+        greedy_initial = tsp.calculate_tour_length(greedy_tour)
         
         ls = local_search_algorithm(tsp)
-        _, gr_final = ls.optimize(gr_tour)
+        _, greedy_final = ls.optimize(greedy_tour)
         
-        print(f"GR: {gr_initial} , {gr_final} (improved {gr_initial - gr_final})")
-        print(f"\nBest: {'GR' if gr_final < rm_final else 'RM'} ({min(gr_final, rm_final)})")
+        print(f"Greedy Algorithm: Starting solution: {greedy_initial} , Improved after local search: {greedy_final}")
