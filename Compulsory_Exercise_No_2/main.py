@@ -1,21 +1,7 @@
-"""
-In this assignment , we are going to compare 2 local search methods used to solve the knapsack problem covered in the lecture.
-
- 1- Generate a set of objects. Each object has a value and a weight. the weight is a random value between 1 and 5. The
-
-      value of an object is a random value between 10 and 20. The capacity of the knapsack is set to 35.
-
-  2- Choose one algorithm to generate a starting solution. You can choose algorithms based on sorting the objects
-
-        according to their values or according to their weights.
-
- 3.  Compare the local search algorithm version 2 with the local search algorithm version 5.
-
- 4.   Compare the two algorithm using number of objects 500, 1500, 2000. The capacity remains the same (35 kg) 
-"""
-
 import random
 import time
+
+
 
 def generate_objects(num_objects):
     objects = []
@@ -27,6 +13,7 @@ def generate_objects(num_objects):
 
 def sorting_algorithm(objects):
     return sorted(objects, key=lambda x: x[1] / x[0], reverse=True)
+
 
 
 
@@ -79,6 +66,8 @@ def local_search_greedy_improvement_version_2(objects, capacity, max_iterations=
     return knapsack, old_value, old_weight
 
 
+
+
 def local_search_greedy_improvement_version_5(objects, capacity, max_iterations=1000):
     sorted_indices = sorted(range(len(objects)), key=lambda i: objects[i][0])
 
@@ -117,7 +106,10 @@ def local_search_greedy_improvement_version_5(objects, capacity, max_iterations=
     return knapsack, previous_total_value, current_weight
 
 
+
+
 if __name__ == "__main__":
+    
     num_objects_list = [500, 1500, 2000]
     capacity = 35
 
